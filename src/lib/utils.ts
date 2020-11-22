@@ -4,6 +4,10 @@ import { Member, Gender } from '../models/member'
 import { FamilyTree } from '../models/family-tree'
 
 export const validateCommand = (cmdWithArgs: string[]) => {
+  if (cmdWithArgs.length === 1 && cmdWithArgs[0] === commands.QUIT) {
+    return true
+  }
+
   if (cmdWithArgs.length < 3) {
     return messages.INVALID_ARGUMENTS
   }
