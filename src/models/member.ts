@@ -59,7 +59,7 @@ export class Member {
 
   getInLaws(gender: Gender): Member[] {
     let inLaws: Member[] = []
-    if (this.spouse !== null || this.spouse.mother !== null) {
+    if (this.spouse !== null && this.spouse.mother !== null) {
       const spouseSiblings = this.spouse.mother.getChildren(
         gender,
         this.spouse.name
@@ -71,12 +71,15 @@ export class Member {
         gender === Gender.Female ? Gender.Male : Gender.Female
 
       const ownSiblings = this.mother.getChildren(siblingGender, this.name)
-      const siblingSpouse = ownSiblings.map((sibling) => {
-        if (sibling.spouse !== null) {
+      const siblingSpouses = ownSiblings
+        .filter((sibling) => {
+          return sibling.spouse !== null
+        })
+        .map((sibling) => {
           return sibling.spouse
-        }
-      })
-      inLaws = inLaws.concat(siblingSpouse)
+        })
+
+      inLaws = inLaws.concat(siblingSpouses)
     }
 
     return inLaws

@@ -138,6 +138,9 @@ export class FamilyTree {
       case relationships.SISTER_IN_LAW:
         return member.getInLaws(Gender.Female)
 
+      case relationships.BROTHER_IN_LAW:
+        return member.getInLaws(Gender.Male)
+
       default:
         throw messages.INVALID_ARGUMENTS
     }

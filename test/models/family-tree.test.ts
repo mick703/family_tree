@@ -114,12 +114,48 @@ describe('getRelationship', () => {
     expect(relatives[1].name).toBe('Louis')
   })
 
-  test(`it can return ${relationships.SISTER_IN_LAW} for a member`, () => {
+  test(`it can return ${relationships.SISTER_IN_LAW} for a member - spouse's sister`, () => {
     const relatives = loadedFamilyTree.getRelationship(
       'Ted',
       relationships.SISTER_IN_LAW
     )
     expect(relatives.length).toBe(1)
     expect(relatives[0].name).toBe('Dominique')
+  })
+
+  test(`it can return ${relationships.SISTER_IN_LAW} for a member - sibling's wife`, () => {
+    const relatives = loadedFamilyTree.getRelationship(
+      'James',
+      relationships.SISTER_IN_LAW
+    )
+    expect(relatives.length).toBe(1)
+    expect(relatives[0].name).toBe('Alice')
+  })
+
+  test(`it can return ${relationships.BROTHER_IN_LAW} for a member - spouse's brother`, () => {
+    const relatives = loadedFamilyTree.getRelationship(
+      'Darcy',
+      relationships.BROTHER_IN_LAW
+    )
+    expect(relatives.length).toBe(1)
+    expect(relatives[0].name).toBe('Albus')
+  })
+
+  test(`it can return ${relationships.BROTHER_IN_LAW} for a member - sibling's husband Louis`, () => {
+    const relatives = loadedFamilyTree.getRelationship(
+      'Louis',
+      relationships.BROTHER_IN_LAW
+    )
+    expect(relatives.length).toBe(1)
+    expect(relatives[0].name).toBe('Ted')
+  })
+
+  test(`it can return ${relationships.BROTHER_IN_LAW} for a member - sibling's husband Hugo`, () => {
+    const relatives = loadedFamilyTree.getRelationship(
+      'Hugo',
+      relationships.BROTHER_IN_LAW
+    )
+    expect(relatives.length).toBe(1)
+    expect(relatives[0].name).toBe('Malfoy')
   })
 })
