@@ -2,7 +2,7 @@ import { FamilyTree } from '../../src/models/family-tree'
 import { Gender, Member } from '../../src/models/member'
 import * as relationships from '../../src/lib/constants/relationships'
 import { initFamilyTree } from '../../src/lib/utils'
-
+import * as messages from '../../src/lib/constants/messages'
 let familyTree: FamilyTree
 
 beforeEach(() => {
@@ -157,5 +157,40 @@ describe('getRelationship', () => {
     )
     expect(relatives.length).toBe(1)
     expect(relatives[0].name).toBe('Malfoy')
+  })
+})
+
+describe('Not happy paths and excpetions', () => {
+  let loadedFamilyTree: FamilyTree
+
+  beforeEach(() => {
+    loadedFamilyTree = initFamilyTree()
+  })
+  it('addChild throws an exception if gender is invalid', () => {
+    expect(() => {
+      loadedFamilyTree.addChild('Margret', 'Joe', undefined)
+    }).toThrow(messages.CHILD_ADDITION_FAILED)
+  })
+  it('addChild throws an exception if member is not found', () => {
+    expect(() => {
+      loadedFamilyTree.addChild('Stranger', 'Joe', Gender.Male)
+    }).toThrow(messages.PERSON_NOT_FOUND)
+  })
+
+  it(`addChild throw an error ${messages.CHILD_ADDITION_FAILED} if member is not a mother`, () => {
+    expect(() => {
+      loadedFamilyTree.addChild('Arthur', 'Joe', Gender.Male)
+    }).toThrow(messages.CHILD_ADDITION_FAILED)
+  })
+
+  it(`addSpouse throw an error ${messages.SPOUSE_ADDITION_FAILED} if member is not found`, () => {
+    expect(() => {
+      loadedFamilyTree.addSpouse('Stranger', 'Jane', Gender.Female)
+    }).toThrow(messages.SPOUSE_ADDITION_FAILED)
+  })
+  it('searchMember returns false if name is empty', () => {
+    expect(loadedFamilyTree.searchMember(loadedFamilyTree.rootMember, '')).toBe(
+      false
+    )
   })
 })
