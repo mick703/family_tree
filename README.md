@@ -33,4 +33,6 @@ yarn start
 - All members have to unique names. Naming multiple members with the same name will cause errors.
 - All members have to use single word names. Multi-word names will causes issues with passing correct input parameters. 
 Due to this limitation, King Arthur and Queen Margret have been named as Arthur and Margret in the famility tree when it initialized. 
+- All commands and parameters are case sensitive. Please check constants/commands.ts and constants/relationships.ts for valid commands and argeuments. 
+
 
